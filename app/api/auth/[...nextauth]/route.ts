@@ -1,7 +1,9 @@
 import { connectToDb } from "../../../../utils/database.connection";
 import NextAuth, { Session, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import UserModel from "../../../../models/user.schema";
+import UserModel from "../../../../models/user.model";
+
+
 
 const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET || "secret",
@@ -13,6 +15,16 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    async session({ session }: { session: Session }) {
+      // store the user id from MongoDB to session
+      const sessionUser = await UserModel.findOne({
+        email: session?.user?.email,
+      });
+      if (sessionUser && session.user) {
+        session.user.id = sessionUser._id.toString();
+      }
+      return session;
+    },
     async signIn({ user }: { user: User }) {
       try {
         await connectToDb();
