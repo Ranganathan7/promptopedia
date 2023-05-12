@@ -14,7 +14,7 @@ import {
 import { BuiltInProviderType } from "next-auth/providers";
 
 const Navbar: React.FC = () => {
-  const isUserLoggedIn: boolean = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="flex justify-between w-full mb-16 pt-4">
-      <Link href="/" className="flex justify-center gap-2">
+      <Link href="/" className="flex justify-center items-center gap-2">
         <Image
           src="/images/logo.svg"
           alt="promptopedia-logo"
@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex items-center gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Prompt
@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
               src="/images/logo.svg"
