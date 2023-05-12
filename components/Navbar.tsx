@@ -53,11 +53,11 @@ const Navbar: React.FC = () => {
             </button>
             <Link href="/profile">
               <Image
-                src="/images/logo.svg"
+                src={session.user.image as string}
                 alt="profile-picture"
                 className="rounded-full"
-                height={37}
-                width={37}
+                height={40}
+                width={40}
               />
             </Link>
           </div>
@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/images/logo.svg"
+              src={session.user.image as string}
               alt="profile-picture"
               className="rounded-full"
               height={37}

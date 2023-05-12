@@ -9,7 +9,6 @@ const UserSchema = new Schema({
   },
   name: {
     type: String,
-    unique: [true, "Username already exists!"],
     required: [true, "Username is required!"],
     match: [
       /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
