@@ -22,7 +22,7 @@ const handler = NextAuth({
         if (!userExist) {
           await UserModel.create({
             email: user.email,
-            name: user.name?.replace(" ", "").toLowerCase(),
+            name: user.name,
             image: user.image,
           });
         }
