@@ -57,7 +57,7 @@ const Feed: React.FC = () => {
         <input
           type="text"
           className="search_input peer"
-          placeholder="Search for a tag or an username"
+          placeholder="Search for a tag or a prompt or an username"
           value={searchText}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleSearchChange(e)
