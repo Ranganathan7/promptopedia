@@ -18,7 +18,6 @@ export interface Post {
 const Feed: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
-  const [searchedResults, setSearchedResults] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -42,13 +41,13 @@ const Feed: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
     const searchResult = filterPrompts(e.target.value);
-    setSearchedResults(searchResult);
+    setPosts(searchResult);
   };
 
   const handleTagClick = (tag: string) => {
     setSearchText(tag);
     const searchResult = filterPrompts(tag);
-    setSearchedResults(searchResult);
+    setPosts(searchResult);
   };
 
   return (
@@ -66,10 +65,7 @@ const Feed: React.FC = () => {
         />
       </form>
 
-      <PromptCardList
-        data={searchText ? searchedResults : posts}
-        handleTagClick={handleTagClick}
-      />
+      <PromptCardList data={posts} handleTagClick={handleTagClick} />
     </section>
   );
 };
