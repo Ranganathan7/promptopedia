@@ -30,12 +30,8 @@ const UserProfile: React.FC<{ params: { id: string } }> = ({ params }) => {
       const data = await response.json();
       setUser(data);
     };
-    if (!session || !session.user) {
-      router.push("/");
-    } else {
-      fetchPost();
-      fetchUser();
-    }
+    fetchPost();
+    fetchUser();
   }, []);
 
   return (
