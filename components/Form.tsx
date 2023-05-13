@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 const Form: React.FC<{
-  type: "Create" | "Edit";
+  type: "Create" | "Update";
   submitting: boolean;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   post: { prompt: string; tag: string };
@@ -59,7 +59,7 @@ const Form: React.FC<{
           />
         </label>
         <div className="self-end mx-3 my-3 gap-4">
-          <Link href="/" className="text-sm text-gray-500">
+          <Link href="/" className="text-sm text-gray-500 hover:text-red-500">
             Cancel
           </Link>
           <button
