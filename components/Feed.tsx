@@ -22,8 +22,12 @@ const Feed: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const response = await fetch("/api/prompt");
-      const data = await response.json();
-      setPosts(data);
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data);
+      } else {
+        console.log(response);
+      }
     };
     fetchPost();
   }, []);
