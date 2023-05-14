@@ -8,6 +8,8 @@ export const GET = async (req: NextRequest) => {
     const prompts = await PromptModel.find({}).populate("userId");
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (err) {
-    return new Response("Failed to fetch prompts!", { status: 500 });
+    return new Response(JSON.stringify("Failed to fetch prompts!"), {
+      status: 500,
+    });
   }
 };
