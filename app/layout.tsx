@@ -2,8 +2,6 @@ import React from "react";
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Provider from "../components/Provider";
-import { getSession, useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,14 +9,11 @@ export const metadata: Metadata = {
   description: "Create, Discover and Share AI prompts.",
 };
 
-const RootLayout: React.FC<{ children: React.ReactNode; session: Session }> = ({
-  children,
-  session,
-}) => {
+const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <Provider session={session}>
+        <Provider>
           <div className="main">
             <div className="gradient" />
           </div>
