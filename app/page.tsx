@@ -1,6 +1,12 @@
 import Feed from "../components/Feed";
 import React from "react";
 
+export async function getServerSideProps() {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
+
 const Home: React.FC = () => {
   return (
     <>
