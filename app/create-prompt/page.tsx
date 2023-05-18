@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Form from "../../components/Form";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import Toast from "@/components/Toast";
 import { toast } from "react-toastify";
 
 const CreatePrompt: React.FC = () => {
@@ -62,7 +61,6 @@ const CreatePrompt: React.FC = () => {
         post={post}
         setPost={setPost}
       />
-      <Toast />
     </>
   );
 };

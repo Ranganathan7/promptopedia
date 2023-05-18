@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Profile from "../../../components/Profile";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { Post } from "../../../components/Feed";
 import { toast } from "react-toastify";
-import Toast from "@/components/Toast";
 
 export interface User {
   name: string;
@@ -26,7 +24,6 @@ const UserProfile: React.FC<{ params: { id: string } }> = ({ params }) => {
         const response = await fetch(`/api/users/${params.id}/posts`);
         const data = await response.json();
         if (!data.error) {
-          toast.success(data.message);
           setUserPosts(data.prompts);
         } else {
           throw data.error;
@@ -64,7 +61,6 @@ const UserProfile: React.FC<{ params: { id: string } }> = ({ params }) => {
         }
         data={userPosts}
       />
-      <Toast />
     </>
   );
 };

@@ -12,6 +12,7 @@ import {
   ClientSafeProvider,
 } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers";
+import { toast } from "react-toastify";
 
 const Navbar: React.FC = () => {
   const { data: session } = useSession();
@@ -52,6 +53,7 @@ const Navbar: React.FC = () => {
               <button
                 onClick={() => {
                   signOut();
+                  toast.success("Logged out Successfully!");
                 }}
                 className="outline_btn"
               >
@@ -116,6 +118,7 @@ const Navbar: React.FC = () => {
                     onClick={() => {
                       setToggleDropDown(false);
                       signOut();
+                      toast.success("Logged out Successfully!");
                     }}
                   >
                     Sign Out

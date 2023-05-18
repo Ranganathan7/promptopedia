@@ -4,11 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Profile from "../../components/Profile";
-import { Session } from "next-auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { Post } from "../../components/Feed";
 import { toast } from "react-toastify";
-import Toast from "@/components/Toast";
 
 const MyProfile: React.FC = () => {
   const { data: session } = useSession();
@@ -75,7 +73,6 @@ const MyProfile: React.FC = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
-      <Toast />
     </>
   );
 };

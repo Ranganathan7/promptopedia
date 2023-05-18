@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Provider from "../components/Provider";
 import { Metadata } from "next";
 import "react-toastify/dist/ReactToastify.css";
+import Toast from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "Promptopedia",
@@ -24,6 +25,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {children}
           </main>
         </Provider>
+        <Toast />
       </body>
     </html>
   );

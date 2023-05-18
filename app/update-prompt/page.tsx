@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "../../components/Form";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import Toast from "@/components/Toast";
 import { toast } from "react-toastify";
 
 const UpdatePrompt: React.FC = () => {
@@ -92,7 +91,6 @@ const UpdatePrompt: React.FC = () => {
         post={post}
         setPost={setPost}
       />
-      <Toast />
     </>
   );
 };

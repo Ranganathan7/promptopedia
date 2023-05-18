@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import PromptCardList from "./PromptCardList";
 import { toast } from "react-toastify";
-import Toast from "./Toast";
 
 export interface Post {
   prompt: string;
@@ -20,7 +19,7 @@ export interface Post {
 const Feed: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
-  const [allPosts, setAllPosts] = useState<Post[]>([])
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -80,7 +79,6 @@ const Feed: React.FC = () => {
 
         <PromptCardList data={posts} handleTagClick={handleTagClick} />
       </section>
-      <Toast />
     </>
   );
 };
