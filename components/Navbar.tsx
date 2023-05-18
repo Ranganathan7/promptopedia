@@ -27,7 +27,11 @@ const Navbar: React.FC = () => {
       const response = await getProviders();
       setProviders(response);
     };
-    setProvidersInitially();
+    if (!session || !session.user) {
+      setProvidersInitially();
+    } else {
+      toast.success("Logged in successfully!");
+    }
   }, []);
 
   return (
