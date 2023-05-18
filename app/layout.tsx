@@ -7,13 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Toast from "@/components/Toast";
 
 export const metadata: Metadata = {
-  title: "Promptopedia",
+  title: "Promptopedia-by-RanganathanSV",
   description: "Create, Discover and Share AI prompts.",
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/logo.svg" />
+      </head>
       <body>
         <Provider>
           <div className="main">
