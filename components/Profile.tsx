@@ -1,5 +1,4 @@
 import React from "react";
-import PromptCard from "./PromptCard";
 import { Post } from "./Feed";
 import PromptCardList from "./PromptCardList";
 

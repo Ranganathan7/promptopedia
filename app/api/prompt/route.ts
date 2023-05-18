@@ -1,19 +1,27 @@
 import { connectToDb } from "../../../utils/database.connection";
 import PromptModel from "../../../models/prompt.model";
-import { NextRequest } from "next/server";
-import { NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, res: NextApiResponse) => {
+export const GET = async (req: NextRequest) => {
   try {
     await connectToDb();
-    const prompts = await PromptModel.find({}).populate("userId");
-    const response = new Response(JSON.stringify(prompts), { status: 200 });
-    response.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate')
-    return response;
+    const prompts = await PromptModel.find({})
+      .sort({ updatedAt: "desc" })
+      .populate("userId")
+      .exec();
+    return NextResponse.json(
+      {
+        prompts: prompts,
+        message: "Fetched all prompts successfully!",
+      },
+      { status: 200 }
+    );
   } catch (err) {
-    console.log(err);
-    return new Response(JSON.stringify("Failed to fetch prompts!"), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { error: "Failed to fetch all prompts!" },
+      {
+        status: 500,
+      }
+    );
   }
 };

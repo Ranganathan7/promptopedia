@@ -1,6 +1,6 @@
 import { connectToDb } from "../../../../../utils/database.connection";
 import PromptModel from "../../../../../models/prompt.model";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
@@ -8,9 +8,18 @@ export const GET = async (
 ) => {
   try {
     await connectToDb();
-    const prompts = await PromptModel.find({ userId: params.id }).populate("userId");
-    return new Response(JSON.stringify(prompts), { status: 200 });
+    const prompts = await PromptModel.find({ userId: params.id })
+      .sort({ updatedAt: "desc" })
+      .populate("userId")
+      .exec();
+    return NextResponse.json(
+      { prompts: prompts, message: "Fetched user's prompts successfully!" },
+      { status: 200 }
+    );
   } catch (err) {
-    return new Response(JSON.stringify("Failed to fetch prompts!"), { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch prompts!" },
+      { status: 500 }
+    );
   }
 };

@@ -1,6 +1,6 @@
 import { connectToDb } from "../../../../utils/database.connection";
 import PromptModel from "@/models/prompt.model";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const { userId, prompt, tag } = await req.json();
@@ -12,12 +12,15 @@ export const POST = async (req: NextRequest) => {
       prompt: prompt,
     });
     await newPrompt.save();
-    return new Response(JSON.stringify(newPrompt), {
-      status: 201,
-    });
+    return NextResponse.json(
+      { prompt: newPrompt, message: "Created prompt successfully!" },
+      {
+        status: 201,
+      }
+    );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ message: "Failed to create a new prompt", error: err }),
+    return NextResponse.json(
+      { error: "Failed to create a new prompt" },
       { status: 500 }
     );
   }

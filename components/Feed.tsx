@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import PromptCardList from "./PromptCardList";
+import { toast } from "react-toastify";
+import Toast from "./Toast";
 
 export interface Post {
   prompt: string;
@@ -18,15 +20,21 @@ export interface Post {
 const Feed: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
+  const [allPosts, setAllPosts] = useState<Post[]>([])
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await fetch("/api/prompt");
-      if (response.ok) {
+      try {
+        const response = await fetch("/api/prompt");
         const data = await response.json();
-        setPosts(data);
-      } else {
-        console.log(response);
+        if (!data.error) {
+          setPosts(data.prompts);
+          setAllPosts(data.prompts);
+        } else {
+          throw data.error;
+        }
+      } catch (err) {
+        toast.error(JSON.stringify(err));
       }
     };
     fetchPost();
@@ -34,7 +42,7 @@ const Feed: React.FC = () => {
 
   const filterPrompts = (search: string) => {
     const regex = new RegExp(search, "i"); // 'i' flag for case-insensitive search
-    return posts.filter(
+    return allPosts.filter(
       (post) =>
         regex.test(post.userId.name) ||
         regex.test(post.tag) ||
@@ -55,22 +63,25 @@ const Feed: React.FC = () => {
   };
 
   return (
-    <section className="feed">
-      <form className="relative flex justify-center items-center w-full">
-        <input
-          type="text"
-          className="search_input peer"
-          placeholder="Search for a tag or a prompt or an username"
-          value={searchText}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleSearchChange(e)
-          }
-          required
-        />
-      </form>
+    <>
+      <section className="feed">
+        <form className="relative flex justify-center items-center w-full">
+          <input
+            type="text"
+            className="search_input peer"
+            placeholder="Search for a tag or a prompt or an username"
+            value={searchText}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleSearchChange(e)
+            }
+            required
+          />
+        </form>
 
-      <PromptCardList data={posts} handleTagClick={handleTagClick} />
-    </section>
+        <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      </section>
+      <Toast />
+    </>
   );
 };
 

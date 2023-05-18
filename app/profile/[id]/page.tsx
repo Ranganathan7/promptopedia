@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Profile from "../../../components/Profile";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { Post } from "../../../components/Feed";
+import { toast } from "react-toastify";
+import Toast from "@/components/Toast";
 
 export interface User {
   name: string;
@@ -14,36 +16,56 @@ export interface User {
 }
 
 const UserProfile: React.FC<{ params: { id: string } }> = ({ params }) => {
-  const { data: session } = useSession();
   const router: AppRouterInstance = useRouter();
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await fetch(`/api/users/${params.id}/posts`);
-      const data = await response.json();
-      setUserPosts(data);
+      try {
+        const response = await fetch(`/api/users/${params.id}/posts`);
+        const data = await response.json();
+        if (!data.error) {
+          toast.success(data.message);
+          setUserPosts(data.prompts);
+        } else {
+          throw data.error;
+        }
+      } catch (err) {
+        toast.error(JSON.stringify(err));
+      }
     };
     const fetchUser = async () => {
-      const response = await fetch(`/api/users/${params.id}`);
-      const data = await response.json();
-      setUser(data);
+      try {
+        const response = await fetch(`/api/users/${params.id}`);
+        const data = await response.json();
+        if (!data.error) {
+          toast.success(data.message);
+          setUser(data.user);
+        } else {
+          throw data.error;
+        }
+      } catch (err) {
+        toast.error(JSON.stringify(err));
+      }
     };
     fetchPost();
     fetchUser();
   }, []);
 
   return (
-    <Profile
-      name={user ? `${user.name}'s` : "No User"}
-      desc={
-        user
-          ? `Welcome to ${user.name}'s personalized profile page. Explore ${user.name}'s exceptional prompts and be inspired by the power of their imagination`
-          : ""
-      }
-      data={userPosts}
-    />
+    <>
+      <Profile
+        name={user ? `${user.name}'s` : "No User"}
+        desc={
+          user
+            ? `Welcome to ${user.name}'s personalized profile page. Explore ${user.name}'s exceptional prompts and be inspired by the power of their imagination`
+            : ""
+        }
+        data={userPosts}
+      />
+      <Toast />
+    </>
   );
 };
 

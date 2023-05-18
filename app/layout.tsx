@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Provider from "../components/Provider";
 import { Metadata } from "next";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Promptopedia",

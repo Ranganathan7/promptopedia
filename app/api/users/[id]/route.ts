@@ -1,6 +1,6 @@
 import UserModel from "../../../../models/user.model";
 import { connectToDb } from "../../../../utils/database.connection";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
@@ -8,9 +8,15 @@ export const GET = async (
 ) => {
   try {
     await connectToDb();
-    const user = await UserModel.findById(params.id);
-    return new Response(JSON.stringify(user), { status: 200 });
+    const user = await UserModel.findById(params.id).exec();
+    return NextResponse.json(
+      { user: user, message: "Fetched user successfully!" },
+      { status: 200 }
+    );
   } catch (err) {
-    return new Response(JSON.stringify("Failed to fetch user!"), { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch user!" },
+      { status: 500 }
+    );
   }
 };
