@@ -1,4 +1,5 @@
-import Toast from "@/components/Toast";
+"use client";
+
 import Feed from "../components/Feed";
 import React from "react";
 
@@ -20,7 +21,6 @@ const Home: React.FC = () => {
 
         <Feed />
       </section>
-      <Toast />
     </>
   );
 };
