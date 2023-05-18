@@ -2,7 +2,7 @@ import { connectToDb } from "../../../utils/database.connection";
 import PromptModel from "../../../models/prompt.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     await connectToDb();
     const prompts = await PromptModel.find({})
